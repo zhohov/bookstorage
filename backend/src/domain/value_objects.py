@@ -11,3 +11,18 @@ class FullName(BaseValueObject):
     first_name: str
     last_name: str
 
+
+@dataclass(frozen=True)
+class Title(BaseValueObject):
+    value: str
+
+
+@dataclass(frozen=True)
+class Description(BaseValueObject):
+    value: str
+
+
+@dataclass(frozen=True)
+class ISBN(BaseValueObject):
+    value: str
+
