@@ -20,3 +20,6 @@ build:
 up:
 	$(DC) -f $(CURRENT_DC) up
 
+.PHONY: export
+export:
+	cd backend && poetry export --without-hashes --format=requirements.txt > requirements.txt

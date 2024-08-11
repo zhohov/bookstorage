@@ -4,14 +4,14 @@ ENV PYTHONUNBUFFERED 1
 
 WORKDIR /backend
 
-COPY pyproject.toml poetry.lock /backend/
-RUN pip install --upgrade pip && pip install poetry
-RUN poetry install --no-dev --no-interaction --no-ansi
+COPY requirements.txt /backend/
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
 
 COPY . /backend/
 
 EXPOSE 8000
 
-CMD ["poetry", "run", "pytest"]
+CMD ["pytest"]
 
 
