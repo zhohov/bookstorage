@@ -11,14 +11,13 @@ else
     $(error Invalid value for env: $(env). Valid values are 'test' or 'dev'.)
 endif
 
+.PHONY: up
+up:
+	$(DC) -f $(CURRENT_DC) up
 
 .PHONY: build
 build:
 	$(DC) -f $(CURRENT_DC) up --build
-
-.PHONY: up
-up:
-	$(DC) -f $(CURRENT_DC) up
 
 .PHONY: export
 export:
