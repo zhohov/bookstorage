@@ -2,7 +2,7 @@ from src.domain.entities import Author, Book
 from src.domain.value_objects import FullName, Title, Description, ISBN 
 
 
-def test_create_author(session):
+def test_create_author(session) -> None:
     fullname = FullName(first_name="John", last_name="Doe")
     author = Author(fullname=fullname, biography="A famous author")
 
@@ -17,7 +17,7 @@ def test_create_author(session):
     assert retrieved_author.biography == "A famous author"
 
 
-def test_create_book(session):
+def test_create_book(session) -> None:
     fullname = FullName(first_name="John", last_name="Doe")
     author = Author(fullname=fullname, biography="A famous author")
     title = Title(value="A Great Book")
