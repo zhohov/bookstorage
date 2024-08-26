@@ -26,6 +26,6 @@ class AbstractAuthorRepository(AbstractRepository[Author], ABC):
     ...
 
 
-class AbstracrBookRepository(AbstractRepository[Book], ABC):
+class AbstractBookRepository(AbstractRepository[Book], ABC):
     ...
 

@@ -74,7 +74,7 @@ def test_repository_can_create_a_book() -> None:
     assert retrieved_book is not None
     assert retrieved_book.title == book.title
     assert retrieved_book.description.value == book.description.value
-    assert retrieved_book.isbn.value == book.value
+    assert retrieved_book.isbn.value == book.isbn.value
     assert retrieved_book.author.fullname.first_name == book.author.fullname.first_name
     assert retrieved_book.author.fullname.last_name == book.author.fullname.last_name
     

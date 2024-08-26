@@ -25,6 +25,9 @@ class Author(BaseEntity):
             return False
         return self.id == other.id
 
+    def __hash__(self) -> int:
+        return super().__hash__()
+
 
 class Book(BaseEntity):
     def __init__(
@@ -48,4 +51,7 @@ class Book(BaseEntity):
         if not isinstance(other, Book):
             return False
         return self.id == other.id
+
+    def __hash__(self) -> int:
+        return super().__hash__()
 
