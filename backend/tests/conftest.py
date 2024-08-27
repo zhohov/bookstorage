@@ -1,7 +1,8 @@
 import pytest
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, clear_mappers
+from sqlalchemy.orm import Session, sessionmaker, clear_mappers
 
+from infrastructure.database.session import FakeSession
 from src.infrastructure.database.tables import metadata, start_mappers
 
 
@@ -17,4 +18,9 @@ def session(in_memory_db):
     start_mappers()
     yield sessionmaker(bind=in_memory_db)()
     clear_mappers()
+
+
+@pytest.fixture
+def fake_session() -> Session:
+    return FakeSession()
 
