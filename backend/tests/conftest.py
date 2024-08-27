@@ -2,7 +2,7 @@ import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session, sessionmaker, clear_mappers
 
-from infrastructure.database.session import FakeSession
+from src.infrastructure.database.session import FakeSession
 from src.infrastructure.database.tables import metadata, start_mappers
 
 

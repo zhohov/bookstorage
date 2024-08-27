@@ -1,9 +1,12 @@
+from dataclasses import dataclass
 from typing import List
 
 from src.domain.entities import Author
 from src.domain.value_objects import FullName
 from src.infrastructure.database.repository import FakeAuthorRepository
 from src.application.services.services import AuthorService
+
+from src.application.dto.dto import AuthorInput
 
 
 def test_create_author(fake_session) -> None:
