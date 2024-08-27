@@ -1,4 +1,3 @@
-from enum import auto
 from src.domain.entities import Author, Book
 from src.domain.value_objects import FullName, Title, Description, ISBN 
 
