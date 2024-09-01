@@ -1,7 +1,6 @@
 from abc import ABC, abstractmethod
-from typing import List
 
-from domain.repository import AbstractRepository
+from src.domain.repository import AbstractRepository
 
 
 class AbstractUnitOfWork(ABC):

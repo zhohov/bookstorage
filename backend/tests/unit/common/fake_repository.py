@@ -38,3 +38,4 @@ class FakeBookRepository(FakeRepository[Book], AbstractBookRepository):
     def __init__(self, ) -> None:
         super().__init__(entity=Book)
     
+

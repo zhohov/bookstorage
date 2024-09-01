@@ -1,7 +1,7 @@
 from src.domain.entities import Author, Book
 from src.domain.value_objects import FullName, Title, Description, ISBN 
 
-from src.infrastructure.database.repository import FakeAuthorRepository, FakeBookRepository
+from .common.fake_repository import FakeAuthorRepository, FakeBookRepository
 
 
 def create_author() -> Author:

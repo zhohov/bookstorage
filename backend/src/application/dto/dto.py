@@ -4,7 +4,12 @@ from src.domain.value_objects import FullName # pyright: ignore
 
 
 @dataclass
-class AuthorInput:
+class BaseDTO:
+    ...
+
+
+@dataclass
+class AuthorInput(BaseDTO):
     fullname: FullName
     biography: str
 
