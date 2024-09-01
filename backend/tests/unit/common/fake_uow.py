@@ -8,8 +8,8 @@ class FakeUnitOfWork(AbstractUnitOfWork):
         self.commited = False
         self.repositories = repositories
 
-    def get_repository(self, repository_name: str) -> AbstractRepository:
-        repository = self.repositories.get(repository_name)
+    def get_repository(self, name: str) -> AbstractRepository:
+        repository = self.repositories.get(name)
         if not repository:
             raise ValueError()
         return repository

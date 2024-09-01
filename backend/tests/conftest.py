@@ -2,7 +2,7 @@ import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session, sessionmaker, clear_mappers
 
-from src.infrastructure.database.tables import metadata, start_mappers
+from src.infrastructure.persistence.tables import metadata, start_mappers
 
 
 @pytest.fixture

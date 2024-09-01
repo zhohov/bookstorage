@@ -1,5 +1,5 @@
 import uuid
-from typing import Optional
+from typing import Optional, Set
 
 from .value_objects import ISBN, FullName, Title, Description
 
@@ -19,6 +19,13 @@ class Author(BaseEntity):
         super().__init__()
         self.fullname = fullname
         self.biography = biography
+        self.books: Set["Book"] = set()
+
+    def update_biography(self, biography: str) -> None:
+        self.biography = biography
+
+    def add_book(self, book: "Book") -> None:
+        self.books.add(book)
 
     def __eq__(self, other) -> bool:
         if not isinstance(other, Author):
@@ -31,12 +38,12 @@ class Author(BaseEntity):
 
 class Book(BaseEntity):
     def __init__(
-        self, title: Title, description: Description, author: Author, isbn: ISBN, filename: Optional[str] = None, 
+        self, title: Title, description: Description, isbn: ISBN, filename: Optional[str] = None, 
     ) -> None:
         super().__init__()
         self.title = title
         self.description = description
-        self.author = author
+        self.authors: Set[Author] = set()
         self.isbn = isbn
         self.is_available: bool = False
         self.filename = filename
@@ -46,6 +53,9 @@ class Book(BaseEntity):
 
     def update_filename(self, value: str) -> None:
         self.filename = value
+
+    def add_author(self, author: Author) -> None:
+        self.authors.add(author)
 
     def __eq__(self, other) -> bool:
         if not isinstance(other, Book):

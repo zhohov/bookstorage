@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
 from typing import Any, Generic, List, Optional, TypeVar
-from sqlalchemy.orm import Session
 from src.domain.uow import AbstractUnitOfWork
 from src.domain.entities import Author # pyright: ignore
 
@@ -34,18 +33,18 @@ class AuthorService(AbstractService[T]):
         author = Author(**payload.__dict__)
 
         with self.uow:
-            repository = self.uow.get_repository(repository_name="AuthorRepository")
+            repository = self.uow.get_repository(name="AuthorRepository")
             repository.create(instance=author)
         
         return author
 
     def get(self, key: str, value: Any) -> Optional[Author]:
         with self.uow:
-            repository = self.uow.get_repository(repository_name="AuthorRepository")
+            repository = self.uow.get_repository(name="AuthorRepository")
             return repository.get(key=key, value=value)  
 
     def all(self) -> Optional[List[Author]]:
         with self.uow:
-            repository = self.uow.get_repository(repository_name="AuthorRepository")
+            repository = self.uow.get_repository(name="AuthorRepository")
             return repository.all()
 
