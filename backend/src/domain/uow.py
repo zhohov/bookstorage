@@ -19,7 +19,3 @@ class AbstractUnitOfWork(ABC):
     @abstractmethod
     def rollback(self) -> None:
         raise NotImplementedError()
-
-    @abstractmethod
-    def get_repository(self) -> AbstractRepository:
-        raise NotImplementedError()

@@ -37,6 +37,9 @@ class AuthorRepository(SqlAlchemyRepository[Author], AbstractAuthorRepository):
     def __init__(self, session: Session) -> None:
         super().__init__(session=session, entity=Author)
 
+    def get_by_id(self, id: uuid.uuid4) -> Optional[Author]:
+        return self.get(key="id", value=id)
+
 
 class BookRepository(SqlAlchemyRepository[Book], AbstractAuthorRepository):
     def __init__(self, session: Session) -> None:

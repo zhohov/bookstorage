@@ -33,18 +33,18 @@ class AuthorService(AbstractService[T]):
         author = Author(**payload.__dict__)
 
         with self.uow:
-            repository = self.uow.get_repository(name="AuthorRepository")
+            repository = self.uow.author_repository
             repository.create(instance=author)
         
         return author
 
     def get(self, key: str, value: Any) -> Optional[Author]:
         with self.uow:
-            repository = self.uow.get_repository(name="AuthorRepository")
+            repository = self.uow.author_repository
             return repository.get(key=key, value=value)  
 
     def all(self) -> Optional[List[Author]]:
         with self.uow:
-            repository = self.uow.get_repository(name="AuthorRepository")
+            repository = self.uow.author_repository
             return repository.all()
 

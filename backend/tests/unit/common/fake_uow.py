@@ -1,18 +1,14 @@
-from typing import Dict, Optional
+from typing import Optional
 from src.domain.repository import AbstractRepository
 from src.domain.uow import AbstractUnitOfWork
+from .fake_repository import FakeAuthorRepository, FakeBookRepository
 
 
 class FakeUnitOfWork(AbstractUnitOfWork):
-    def __init__(self, repositories: Dict[str, AbstractRepository]) -> None:
+    def __init__(self) -> None:
         self.commited = False
-        self.repositories = repositories
-
-    def get_repository(self, name: str) -> AbstractRepository:
-        repository = self.repositories.get(name)
-        if not repository:
-            raise ValueError()
-        return repository
+        self.author_repository = FakeAuthorRepository()
+        self.book_repository = FakeBookRepository()
 
     def commit(self) -> None:
         self.commited = True

@@ -11,8 +11,7 @@ from .common.fake_uow import FakeUnitOfWork
 
 
 def test_create_author() -> None:
-    repositories = {"AuthorRepository": FakeAuthorRepository()}
-    uow = FakeUnitOfWork(repositories=repositories)
+    uow = FakeUnitOfWork()
     service = AuthorService(uow=uow)
     fullname = FullName(first_name="John", last_name="Doe")
     payload = AuthorInput(fullname=fullname, biography="A famous author")
@@ -26,8 +25,7 @@ def test_create_author() -> None:
 
 
 def test_get_all_authors() -> None:
-    repositories = {"AuthorRepository": FakeAuthorRepository()}
-    uow = FakeUnitOfWork(repositories=repositories)
+    uow = FakeUnitOfWork()
     service = AuthorService(uow=uow)
     fullname = FullName(first_name="John", last_name="Doe")
     payload = AuthorInput(fullname=fullname, biography="A famous author")
