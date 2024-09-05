@@ -1,6 +1,6 @@
-from src.domain.entities import Author
-from src.domain.value_objects import FullName
-from src.infrastructure.persistence.repository import AuthorRepository
+from src.domain.entities import Author, Book
+from src.domain.value_objects import FullName, ISBN, Title, Description
+from src.infrastructure.persistence.repository import AuthorRepository, BookRepository
 from tests.unit.common.fake_repository import List
 
 
@@ -45,4 +45,23 @@ class TestAuthorRepository:
         assert isinstance(retrieved_author, Author)
         assert retrieved_author == author
 
+
+class TestBookRepository:
+    def test_create_repository(self, session) -> None:
+        repository = BookRepository(session=session)
+        
+        assert isinstance(repository, BookRepository)
+
+    def test_repository_can_create_author(self, session) -> None:
+        title = Title(value="Domain-Driven Design: Tackling Complexity in the Heart of Software")
+        description = Description(value="Book about Domain-Driven Design")
+        isbn = ISBN(value="9780321125217")
+        book = Book(title=title, description=description, isbn=isbn)
+        repository = BookRepository(session=session)
+
+        repository.create(instance=book)
+        retrieved_author = repository.get(key="id", value=book.id)
+
+        assert isinstance(retrieved_author, Book)
+        assert retrieved_author == book
 

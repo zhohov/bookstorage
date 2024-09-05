@@ -1,11 +1,10 @@
 import uuid
+from typing import Any, Generic, List, TypeVar, Optional
 from sqlalchemy import Result, select
 from src.domain.entities import BaseEntity, Author, Book
 from src.domain.repository import AbstractRepository, AbstractAuthorRepository
 
 from sqlalchemy.orm import Session
-
-from tests.unit.common.fake_repository import Any, Generic, List, TypeVar, Optional
 
 
 T = TypeVar("T", bound=BaseEntity)
