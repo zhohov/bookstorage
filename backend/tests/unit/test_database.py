@@ -28,7 +28,7 @@ def test_create_author(session) -> None:
 def test_create_book(session) -> None:
     title = Title(value="A Great Book")
     description = Description(value="An interesting description")
-    isbn = ISBN(value="123-456-789")
+    isbn = ISBN(value="12324561789")
     book = Book(title=title, description=description, isbn=isbn)
 
     session.add(book)
@@ -38,7 +38,7 @@ def test_create_book(session) -> None:
     assert retrieved_book is not None
     assert retrieved_book.title.value == "A Great Book"
     assert retrieved_book.description.value == "An interesting description"
-    assert retrieved_book.isbn.value == "123-456-789"
+    assert retrieved_book.isbn.value == "12324561789"
     assert len(retrieved_book.authors) == 0
 
 
@@ -48,7 +48,7 @@ def test_create_book_with_two_authors(session) -> None:
 
     title = Title(value="A Great Book")
     description = Description(value="An interesting description")
-    isbn = ISBN(value="123-456-789")
+    isbn = ISBN(value="12324561789")
     book = Book(title=title, description=description, isbn=isbn)
     
     book.add_author(author1)
@@ -63,7 +63,7 @@ def test_create_book_with_two_authors(session) -> None:
     assert retrieved_book is not None
     assert retrieved_book.title.value == "A Great Book"
     assert retrieved_book.description.value == "An interesting description"
-    assert retrieved_book.isbn.value == "123-456-789"
+    assert retrieved_book.isbn.value == "12324561789"
     assert len(retrieved_book.authors) == 2
 
     assert retrieved_book.authors == set([author1, author2])
