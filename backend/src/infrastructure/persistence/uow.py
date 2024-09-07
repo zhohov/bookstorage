@@ -1,17 +1,20 @@
 from typing import Dict, Optional
 
-from sqlalchemy.orm import Session
+from pytest import Session
+
+from .session import DEFAULT_SESSION_FACTORY
 from src.infrastructure.persistence.repository import AuthorRepository
 from src.domain.repository import AbstractRepository
 from src.domain.uow import AbstractUnitOfWork
 
 
 class SqlAlchemyUnitOfWork(AbstractUnitOfWork):
-    def __init__(self, session: Session) -> None:
-        self.session = session
-        self.author_repository = AuthorRepository(session=session)
+    def __init__(self, session_factory=DEFAULT_SESSION_FACTORY) -> None:
+        self.session_factory = session_factory
 
     def __enter__(self) -> "SqlAlchemyUnitOfWork":
+        self.session: Session = self.session_factory()
+        self.author_repository = AuthorRepository(session=self.session)
         return self
 
     def __exit__(self, exc_type: Optional[type[BaseException]], *args) -> None:
