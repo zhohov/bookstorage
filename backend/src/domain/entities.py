@@ -1,5 +1,5 @@
 import uuid
-from typing import Optional, Set
+from typing import Any, Dict, Optional, Set
 
 from .value_objects import ISBN, FullName, Title, Description
 
@@ -26,6 +26,9 @@ class Author(BaseEntity):
 
     def add_book(self, book: "Book") -> None:
         self.books.add(book)
+
+    def to_dict(self) -> Dict[str, Any]:
+        return {"id": self.id, "fullname": self.fullname, "biography": self.biography}
 
     def __eq__(self, other) -> bool:
         if not isinstance(other, Author):

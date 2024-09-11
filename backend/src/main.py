@@ -1,14 +1,15 @@
 import uvicorn
 from fastapi import FastAPI
 
-from infrastructure.application.factory import create_app
-from infrastructure.persistence.tables import start_mappers, metadata
-from infrastructure.persistence.session import get_engine
+from src.infrastructure.application.factory import create_app
+from src.infrastructure.persistence.tables import start_mappers, metadata
+from src.infrastructure.persistence.session import get_engine
+from src.entrypoints.api import routers
 
 
 app: FastAPI = create_app(
     title="bookstorage",
-    routers=[],
+    routers=routers,
 )
 
 
