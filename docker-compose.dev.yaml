@@ -1,8 +1,8 @@
 version: "3.8"
 
 services:
-  backend:
-    container_name: backend
+  backend_dev:
+    container_name: backend_dev
     build:
       context: ./backend
       dockerfile: Dockerfile.dev
@@ -12,21 +12,20 @@ services:
     volumes:
       - ./backend:/backend
     depends_on:
-      - db
-    env_file:
-      - .env.example
-
-  db:
-    image: postgres:16.2
-    restart: always
-    environment:
-      - POSTGRES_DB=${DB_NAME}
-      - POSTGRES_USER=${DB_USER}
-      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - db_dev
     env_file:
       - .env
+
+  db_dev:
+    image: postgres:16.2
+    container_name: db_dev
+    restart: always
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
     ports:
-      - "5433:5433"
+      - "5433:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data 
 
@@ -43,7 +42,7 @@ services:
     ports:
       - "5050:80"
     depends_on:
-      - db
+      - db_dev
     volumes:
       - pgadmin-data:/var/lib/pgadmin
 
