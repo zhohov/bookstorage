@@ -18,6 +18,7 @@ class DatabaseSettings:
 @dataclass
 class Settings:
     db: DatabaseSettings = field(default_factory=DatabaseSettings)
+    api_url: str = field(default=os.getenv("API_URL"))
 
 
 settings = Settings()

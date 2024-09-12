@@ -1,4 +1,4 @@
-from typing import Any, Dict
+from typing import Any, Dict, List, Optional
 from uuid import UUID, uuid4
 from fastapi import APIRouter, status
 from fastapi.requests import Request
@@ -33,5 +33,15 @@ def create_author(request: Request, payload: AuthorInput) -> Dict[str, Any]:
     author = service.create(payload=payload)
 
     return {"created": AuthorOutput(**author.to_dict())}
+
+
+@authors_router.post(path="/all", status_code=status.HTTP_200_OK)
+def create_author(request: Request) -> Optional[List[AuthorOutput]]:
+    uow = SqlAlchemyUnitOfWork()
+    service = AuthorService(uow=uow)
+
+    authors = service.all()
+
+    return authors
 
 
