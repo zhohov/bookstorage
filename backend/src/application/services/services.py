@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
 from typing import Any, Generic, List, Optional, TypeVar
 from uuid import UUID
-from domain.repository import AbstractAuthorRepository
-from infrastructure.persistence.repository import AuthorRepository
+from src.domain.repository import AbstractAuthorRepository
+from src.infrastructure.persistence.repository import AuthorRepository
 from src.domain.uow import AbstractUnitOfWork
 from src.domain.entities import Author # pyright: ignore
 
@@ -41,20 +41,24 @@ class AuthorService(AbstractService[T]):
         
         return author
 
-    def get(self, key: str, value: Any) -> Optional[Author]:
+    def get(self, key: str, value: Any) -> Optional[AuthorOutput]:
         with self.uow:
             repository: AbstractAuthorRepository = self.uow.author_repository
-            return repository.get(key=key, value=value)  
+            retrieved_author = repository.get(key=key, value=value)
+            author = AuthorOutput(**retrieved_author.to_dict())
+            return author  
 
-    def all(self) -> Optional[List[Author]]:
+    def all(self) -> Optional[List[AuthorOutput]]:
         with self.uow:
             repository: AbstractAuthorRepository = self.uow.author_repository
             authors = repository.all()
             result = [AuthorOutput(**author.to_dict()) for author in authors]
             return result
 
-    def get_by_id(self, id: UUID) -> Optional[Author]:
+    def get_by_id(self, id: UUID) -> Optional[AuthorOutput]:
         with self.uow:
             repository: AbstractAuthorRepository = self.uow.author_repository
-            return repository.get_by_id()
+            retrieved_author = repository.get_by_id(id=id)
+            author = AuthorOutput(**retrieved_author.to_dict())
+            return author
 

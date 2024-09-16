@@ -13,14 +13,22 @@ authors_router = APIRouter(
 )
 
 
-@authors_router.get(path="/{id}", status_code=status.HTTP_200_OK)
-def get_author(request: Request, id: UUID) -> AuthorOutput:
+@authors_router.get(path="/", status_code=status.HTTP_200_OK)
+def get_all_authors(request: Request) -> Optional[List[AuthorOutput]]:
     uow = SqlAlchemyUnitOfWork()
     service = AuthorService(uow=uow)
 
-    retrieved_author = service.get(key="id", value=id)
+    authors = service.all()
 
-    author = AuthorOutput(**retrieved_author.to_dict())
+    return authors
+
+
+@authors_router.get(path="/{id}", status_code=status.HTTP_200_OK)
+def get_author_by_id(request: Request, id: UUID) -> Optional[AuthorOutput]:
+    uow = SqlAlchemyUnitOfWork()
+    service = AuthorService(uow=uow)
+
+    author = service.get_by_id(id=id)
 
     return author
     
@@ -33,15 +41,4 @@ def create_author(request: Request, payload: AuthorInput) -> Dict[str, Any]:
     author = service.create(payload=payload)
 
     return {"created": AuthorOutput(**author.to_dict())}
-
-
-@authors_router.post(path="/all", status_code=status.HTTP_200_OK)
-def create_author(request: Request) -> Optional[List[AuthorOutput]]:
-    uow = SqlAlchemyUnitOfWork()
-    service = AuthorService(uow=uow)
-
-    authors = service.all()
-
-    return authors
-
 

@@ -4,9 +4,8 @@ from src.domain.entities import Author
 from src.domain.value_objects import FullName
 from src.application.services.services import AuthorService
 
-from src.application.dto.dto import AuthorInput
+from src.application.dto.dto import AuthorInput, AuthorOutput
 
-from .common.fake_repository import FakeAuthorRepository
 from .common.fake_uow import FakeUnitOfWork
 
 
@@ -33,7 +32,7 @@ def test_get_all_authors() -> None:
     author = service.create(payload=payload)
     retrieved_authors = service.all()
 
-    expected = [author]
+    expected = [AuthorOutput(**author.to_dict())]
 
     assert isinstance(retrieved_authors, List)
     assert retrieved_authors == expected
