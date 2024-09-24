@@ -1,4 +1,6 @@
 import pytest
+import time
+import requests
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session, sessionmaker, clear_mappers
 
@@ -21,4 +23,19 @@ def session_factory(in_memory_db):
 @pytest.fixture
 def session(session_factory) -> Session:
     return session_factory()
+
+def wait_for_webapp_to_come_up():
+    deadline = time.time() + 10
+    url = "http://backend_test:8000/"
+    while time.time() < deadline:
+        try:
+            return requests.get(url)
+        except ConnectionError:
+            time.sleep(0.5)
+    pytest.fail("API never came up")
+
+@pytest.fixture
+def restart_api():
+    time.sleep(2)
+    wait_for_webapp_to_come_up()
 

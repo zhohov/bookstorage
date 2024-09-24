@@ -20,5 +20,5 @@ class TestAuthorService:
 
         assert isinstance(author, Author)
         assert retrieved_author.id == author.id
-        assert retrieved_author.fullname.first_name == author.fullname.first_name
+        assert retrieved_author.fullname["first_name"] == author.fullname.first_name
 

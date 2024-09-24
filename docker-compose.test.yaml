@@ -1,11 +1,25 @@
 version: "3.8"
 
 services:
+  test:
+    container_name: test
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.test
+    tty: true
+    volumes:
+      - ./backend:/backend
+    depends_on:
+      - backend_test
+      - db_test
+    env_file:
+      - .env.example
+
   backend_test:
     container_name: backend_test
     build:
       context: ./backend
-      dockerfile: Dockerfile.test
+      dockerfile: Dockerfile.dev
     tty: true
     ports:
       - "8000:8000"

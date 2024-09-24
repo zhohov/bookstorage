@@ -1,7 +1,7 @@
 from dataclasses import dataclass
-from uuid import UUID, uuid4
+from uuid import UUID
 
-from src.domain.value_objects import FullName # pyright: ignore
+from src.domain.value_objects import FullName
 
 
 @dataclass
