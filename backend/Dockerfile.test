@@ -15,4 +15,3 @@ EXPOSE 8000
 
 CMD ["pytest"]
 
-

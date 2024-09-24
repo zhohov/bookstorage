@@ -1,6 +1,6 @@
 from typing import Any, Dict, List, Optional
-from uuid import UUID, uuid4
-from fastapi import APIRouter, status
+from uuid import UUID
+from fastapi import APIRouter, HTTPException, status
 from fastapi.requests import Request
 from src.application.services.services import AuthorService
 from src.application.dto.dto import AuthorInput, AuthorOutput
@@ -29,6 +29,9 @@ def get_author_by_id(request: Request, id: UUID) -> Optional[AuthorOutput]:
     service = AuthorService(uow=uow)
 
     author = service.get_by_id(id=id)
+
+    if not author:
+        raise HTTPException(status_code=status.HTTP_204_NO_CONTENT)
 
     return author
     

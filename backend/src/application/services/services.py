@@ -1,6 +1,8 @@
 from abc import ABC, abstractmethod
 from typing import Any, Generic, List, Optional, TypeVar
 from uuid import UUID
+
+from sqlalchemy import except_
 from src.domain.repository import AbstractAuthorRepository
 from src.infrastructure.persistence.repository import AuthorRepository
 from src.domain.uow import AbstractUnitOfWork
@@ -58,7 +60,10 @@ class AuthorService(AbstractService[T]):
     def get_by_id(self, id: UUID) -> Optional[AuthorOutput]:
         with self.uow:
             repository: AbstractAuthorRepository = self.uow.author_repository
-            retrieved_author = repository.get_by_id(id=id)
-            author = AuthorOutput(**retrieved_author.to_dict())
-            return author
+            try:
+                retrieved_author = repository.get_by_id(id=id)
+                author = AuthorOutput(**retrieved_author.to_dict())
+                return author
+            except ValueError:
+                return None
 

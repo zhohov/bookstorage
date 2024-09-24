@@ -24,7 +24,10 @@ class SqlAlchemyRepository(AbstractRepository[T], Generic[T]):
         )
         result: Result = self.session.execute(statement=query)
 
-        return result.scalars().one_or_none()
+        if not (_result := result.scalars().one_or_none()):
+            raise ValueError()
+
+        return _result
 
     def all(self) -> Optional[List[T]]:
         query = select(self.entity)
