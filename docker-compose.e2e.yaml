@@ -1,0 +1,47 @@
+version: "3.8"
+
+services:
+  e2e_test:
+    container_name: e2e_test
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.e2e
+    tty: true
+    volumes:
+      - ./backend:/backend
+    depends_on:
+      - backend_test
+      - db_e2e_test
+    env_file:
+      - .env.e2e
+
+  backend_test:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    tty: true
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/backend
+    depends_on:
+      - db_e2e_test
+    env_file:
+      - .env.e2e
+
+  db_e2e_test:
+    image: postgres:16.2
+    restart: always
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    env_file:
+      - .env.e2e
+    ports:
+      - "5434:5434"
+    volumes:
+      - pgdata:/var/lib/postgresql/data 
+
+volumes:
+  pgdata:

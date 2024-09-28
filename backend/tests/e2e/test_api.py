@@ -2,6 +2,7 @@ import pytest
 import requests
 
 
+@pytest.mark.e2e
 @pytest.mark.usefixtures("restart_api")
 def test_authors() -> None:
     request = requests.get("http://backend_test:8000/authors")
@@ -9,6 +10,7 @@ def test_authors() -> None:
     assert request.status_code == 200
 
 
+@pytest.mark.e2e
 @pytest.mark.usefixtures("restart_api")
 def test_create_author() -> None:
     data = {

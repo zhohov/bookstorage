@@ -1,5 +1,23 @@
+import pytest
+
 from src.domain.entities import Author, Book
 from src.domain.value_objects import FullName, Title, Description, ISBN
+
+
+@pytest.fixture
+def author() -> Author:
+    fullname = FullName(first_name="Eric", last_name="Evans")
+    author = Author(fullname=fullname)
+    return author
+
+
+@pytest.fixture
+def book() -> Book:
+    title = Title(value="Domain-Driven Design: Tackling Complexity in the Heart of Software")
+    description = Description(value="Book about Domain-Driven Design")
+    isbn = ISBN(value="9780321125217")
+    book = Book(title=title, description=description, isbn=isbn)
+    return book
 
 
 def create_author() -> Author:
@@ -33,10 +51,7 @@ def test_create_book_without_author() -> None:
     assert book.filename == None
 
 
-def test_add_author_in_book() -> None:
-    author: Author = create_author()
-    book = create_book()
-
+def test_add_author_in_book(author, book) -> None:
     book.add_author(author=author)
 
     assert book.authors == set([author])

@@ -13,6 +13,5 @@ COPY . /backend/
 
 EXPOSE 8000
 
-CMD ["pytest", "-v", "-m", "not e2e"]
-
+CMD ["pytest", "-v", "-m", "e2e"]
 

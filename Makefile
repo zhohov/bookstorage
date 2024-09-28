@@ -1,10 +1,13 @@
 DC := docker-compose
 TEST_DC := docker-compose.test.yaml
+E2E_DC := docker-compose.e2e.yaml
 DEV_DC := docker-compose.dev.yaml
 env ?= test
 
 ifeq ($(env),test)
     CURRENT_DC := $(TEST_DC)
+else ifeq ($(env),e2e)
+	CURRENT_DC := $(E2E_DC)
 else ifeq ($(env),dev)
 	CURRENT_DC := $(DEV_DC)
 else
