@@ -4,16 +4,7 @@ from src.domain.value_objects import FullName, Title, Description, ISBN
 from .common.fake_repository import FakeAuthorRepository, FakeBookRepository
 
 
-def create_author() -> Author:
-    fullname = FullName(first_name="John", last_name="Doe")
-    author = Author(fullname=fullname, biography="A famous author")
-
-    return author
-
-
-def test_create_author(session) -> None:
-    author = create_author()
-
+def test_create_author(session, author) -> None:
     session.add(author)
     session.commit()
 

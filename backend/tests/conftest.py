@@ -5,6 +5,16 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import Session, sessionmaker, clear_mappers
 
 from src.infrastructure.persistence.tables import metadata, start_mappers
+from src.domain.entities import Author
+from src.domain.value_objects import FullName
+
+
+@pytest.fixture
+def author() -> Author:
+    fullname = FullName(first_name="John", last_name="Doe")
+    author = Author(fullname=fullname, biography="A famous author")
+
+    return author
 
 
 @pytest.fixture
