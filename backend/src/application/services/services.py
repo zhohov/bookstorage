@@ -2,13 +2,11 @@ from abc import ABC, abstractmethod
 from typing import Any, Generic, List, Optional, TypeVar
 from uuid import UUID
 
-from sqlalchemy import except_
-from src.domain.repository import AbstractAuthorRepository
-from src.infrastructure.persistence.repository import AuthorRepository
+from src.domain.repository import AbstractAuthorRepository, AbstractBookRepository
 from src.domain.uow import AbstractUnitOfWork
-from src.domain.entities import Author # pyright: ignore
+from src.domain.entities import Author, Book
 
-from src.application.dto.dto import BaseDTO, AuthorInput, AuthorOutput
+from src.application.dto.dto import BaseDTO, AuthorInput, AuthorOutput, BookInput, BookOutput
 
 
 T = TypeVar("T", bound=BaseDTO)
@@ -67,3 +65,32 @@ class AuthorService(AbstractService[T]):
             except ValueError:
                 return None
 
+
+class BookService:
+    def __init__(
+        self, uow: AbstractUnitOfWork
+    ) -> None:
+        self.uow = uow
+
+    def create(self, payload: BookInput) -> Optional[Book]:
+        book = Book(**payload.__dict__)
+
+        with self.uow:
+            repository: AbstractBookRepository = self.uow.book_repository
+            repository.create(instance=book)
+        
+        return book 
+
+    def get(self, key: str, value: Any) -> Optional[Book]:
+        with self.uow:
+            repository: AbstractBookRepository = self.uow.book_repository
+            retrieved_book = repository.get(key=key, value=value)
+            book = BookOutput(**retrieved_book.to_dict())
+            return book  
+
+    def all(self) -> Optional[List[BookOutput]]:
+        with self.uow:
+            repository: AbstractBookRepository = self.uow.author_repository
+            books = repository.all()
+            result = [BookOutput(**book.to_dict()) for book in books]
+            return result

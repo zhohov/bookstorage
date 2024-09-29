@@ -5,7 +5,6 @@ from src.application.services.services import AuthorService
 from src.application.dto.dto import AuthorInput
 from src.domain.value_objects import FullName
 from src.domain.entities import Author
-from tests.conftest import session_factory
 
 
 class TestAuthorService:

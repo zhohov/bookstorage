@@ -68,6 +68,15 @@ class Book(BaseEntity):
     def add_author(self, author: Author) -> None:
         self.authors.add(author)
 
+    def to_dict(self) -> Dict[str, Any]:
+        data = {
+            "id": self.id,
+            "title": self.title,
+            "description": self.description,
+            "isbn": self.isbn,
+        }
+        return data
+
     def __eq__(self, other) -> bool:
         if not isinstance(other, Book):
             return False
