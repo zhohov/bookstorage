@@ -3,7 +3,7 @@ from typing import Dict, Optional
 from pytest import Session
 
 from .session import DEFAULT_SESSION_FACTORY
-from src.infrastructure.persistence.repository import AuthorRepository
+from src.infrastructure.persistence.repository import AuthorRepository, BookRepository
 from src.domain.repository import AbstractRepository
 from src.domain.uow import AbstractUnitOfWork
 
@@ -15,6 +15,7 @@ class SqlAlchemyUnitOfWork(AbstractUnitOfWork):
     def __enter__(self) -> "SqlAlchemyUnitOfWork":
         self.session: Session = self.session_factory()
         self.author_repository = AuthorRepository(session=self.session)
+        self.book_repository = BookRepository(session=self.session)
         return self
 
     def __exit__(self, exc_type: Optional[type[BaseException]], *args) -> None:

@@ -84,13 +84,17 @@ class BookService:
     def get(self, key: str, value: Any) -> Optional[Book]:
         with self.uow:
             repository: AbstractBookRepository = self.uow.book_repository
-            retrieved_book = repository.get(key=key, value=value)
-            book = BookOutput(**retrieved_book.to_dict())
-            return book  
+            try:
+                retrieved_book = repository.get(key=key, value=value)
+                book = BookOutput(**retrieved_book.to_dict())
+                return book  
+            except ValueError:
+                return None
 
     def all(self) -> Optional[List[BookOutput]]:
         with self.uow:
-            repository: AbstractBookRepository = self.uow.author_repository
+            repository: AbstractBookRepository = self.uow.book_repository
             books = repository.all()
             result = [BookOutput(**book.to_dict()) for book in books]
             return result
+
